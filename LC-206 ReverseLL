@@ -26,3 +26,40 @@ public:
         return head; 
     }
 };
+//OPTIMIZED:  TC: O(n). 
+
+class Solution {
+public:
+    ListNode* reverseList(ListNode* head) {
+        ListNode* temp = head; 
+        ListNode* prev = NULL; 
+        
+
+        while(temp != NULL){
+        ListNode* front = temp->next; 
+            temp->next = prev; 
+             prev = temp; 
+             temp = front; 
+             
+        }
+        return prev; 
+    }
+};
+// USING RECURSION: TC: O(n)  
+
+ class Solution {
+public:
+    ListNode* reverseList(ListNode* head) {
+        
+        if(head == NULL || head->next == NULL){
+            return head; 
+        }   // 1 or 0 nodes
+          
+          ListNode* newHead = reverseList(head->next); // call to (3rd recursion then to 2nd the to 1/0th one)
+          ListNode* temp = head->next; 
+          temp->next = head; 
+          head->next = NULL; 
+
+          return newHead; 
+    }
+};
