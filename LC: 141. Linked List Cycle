@@ -6,6 +6,7 @@
  *     ListNode(int x) : val(x), next(NULL) {}
  * };
  */
+//Using HASING: TC: O(N*2*logN), SC: O(N)  
 class Solution {
 public:
     bool hasCycle(ListNode *head) {
@@ -24,3 +25,27 @@ public:
         return false; 
     }
 };
+// OPTIMAL: USING TORTOISE AND HARE: TC: O(n) and SC: O(1) 
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    bool hasCycle(ListNode *head) {
+        ListNode* Tur = head; 
+        ListNode* Rabi = head; 
+
+        while(Rabi != NULL && Rabi->next != NULL){
+            Tur = Tur->next; 
+            Rabi = Rabi->next->next; 
+            if(Tur == Rabi)
+            return true; 
+        }
+        return false; 
+    }
+}; 
