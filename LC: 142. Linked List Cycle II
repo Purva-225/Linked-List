@@ -18,6 +18,30 @@ public:
 };
 // Optimal: using Tortoise & Hare 
 //TC: O(n), sc O(1) 
+class Solution {
+public:
+    ListNode *detectCycle(ListNode *head) {
+        unordered_map <ListNode*, int> mpp; 
+        ListNode* tor = head; 
+        ListNode* Hare = head; 
+
+       while(Hare != NULL && Hare->next != NULL){
+        tor = tor->next; 
+        Hare = Hare->next->next; 
+        if(tor == Hare){
+            tor = head; 
+        
+            while(tor != Hare){
+               tor = tor->next; 
+               Hare = Hare->next;
+          }
+          return tor; 
+        }
+      }
+       return NULL; 
+    }
+};
+
 
 
 
