@@ -1,0 +1,24 @@
+//Using Hash: TC: O(n*2*logn), Sc O(n) 
+
+class Solution {
+public:
+    ListNode *detectCycle(ListNode *head) {
+        unordered_map <ListNode*, int> mpp; 
+        ListNode* temp = head; 
+
+       while(temp != NULL){
+        if(mpp.find(temp) != mpp.end()){
+            return temp; 
+        }
+        mpp[temp] = 1; 
+        temp = temp->next; 
+       }
+       return NULL; 
+    }
+};
+// Optimal: using Tortoise & Hare 
+//TC: O(n), sc O(1) 
+
+
+
+
