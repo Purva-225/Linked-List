@@ -29,3 +29,32 @@ class Solution {
        return 0; 
     }
 };
+// OPTIMIZED BY: TORTOISE AND HARE, SC: O(1), TC: O(N)
+int FindLoop(Node* Tor,Node* Hare){
+        int cnt = 1; 
+        Tor = Tor->next; 
+        while(Tor != Hare){
+           cnt++; 
+         Tor = Tor->next; 
+        }
+         return cnt;
+}
+
+class Solution {
+  public:
+    int lengthOfLoop(Node *head) {
+       Node* Tor = head; 
+       Node* Hare = head; 
+       while(Hare != NULL && Hare->next != NULL){
+                 Tor = Tor->next; 
+                 Hare = Hare->next->next; 
+                 if(Tor == Hare){
+                     return FindLoop(Tor,Hare);
+                 }
+       }
+       return 0; 
+    }
+};
+
+
+
