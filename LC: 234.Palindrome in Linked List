@@ -8,6 +8,7 @@
  *     ListNode(int x, ListNode *next) : val(x), next(next) {}
  * };
  */
+// USING STACK : TC: O(2N), SC: O(N) . 
 class Solution {
 public:
     bool isPalindrome(ListNode* head) {
@@ -30,3 +31,44 @@ public:
       return true; 
     }
 };
+// USING TORTOISE AND HARE : TC: O(2N) , SC: O(N). 
+// Otimal Approach. 
+class Solution {
+public:
+
+ListNode* reverseLL(ListNode* head){
+    if(head == NULL || head->next == NULL){
+        return head; 
+    }
+    ListNode* Nhead = reverseLL(head->next); 
+    ListNode* Front = head->next; 
+    Front->next = head; 
+    head->next = NULL; 
+    return Nhead; 
+}
+
+    bool isPalindrome(ListNode* head) {
+        if(head == NULL || head->next == NULL) return true; 
+        ListNode* slow = head; 
+        ListNode* Fast = head; 
+
+        while(Fast->next != NULL && Fast->next->next != NULL){
+            slow = slow->next; 
+            Fast = Fast->next->next; 
+        }
+        ListNode* Nhead = reverseLL(slow->next);  
+        ListNode* Tor = head; 
+        ListNode* Hare = Nhead; 
+
+        while(Hare != NULL){
+            if(Tor->val != Hare->val){
+            reverseLL(Nhead); 
+            return false; 
+        }
+       Tor = Tor->next; 
+       Hare = Hare->next;  
+    }
+       reverseLL(Nhead); 
+       return true; 
+    }
+}; 
