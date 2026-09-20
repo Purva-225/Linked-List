@@ -9,6 +9,7 @@
  * };
  */
 //Brute approach: USING EXTRA ARR[] SPACE
+//Tc: O(2N), SC: O(N) due to extra arr[]. 
 class Solution {
 public:
     ListNode* oddEvenList(ListNode* head) {
@@ -45,5 +46,28 @@ public:
             temp = temp->next; 
         }
         return head; 
+    }
+};
+//Optimal: Just by interchanging linkes
+//Tc:O(N) O(N/2) for odd and O(N/2) for Even, Sc: O(1). 
+class Solution {
+public:
+    ListNode* oddEvenList(ListNode* head) { 
+          if(head == NULL || head->next == NULL){
+             return head;
+          } 
+        ListNode* Odd = head;
+        ListNode* EvenH= head->next;
+         ListNode* Eve = EvenH;
+     
+       while(Eve != NULL && Eve->next != NULL){
+          Odd->next = Odd->next->next; 
+          Eve->next = Eve->next->next; 
+          
+          Odd = Odd->next; 
+          Eve = Eve->next; 
+       }
+       Odd->next = EvenH; 
+        return head;
     }
 };
