@@ -55,5 +55,61 @@ class Solution {
         return head;
     }
 };
-
 // Optimal approach: Using interchanging in links:- Tc: O(n), Sc: O(1)
+/* Node is defined as
+  class Node {
+  public:
+    int data;
+    Node* next;
+
+    Node(int x) {
+        data = x;
+        next = nullptr;
+    }
+};
+*/
+class Solution {
+  public:
+    Node* segregate(Node* head) {
+        
+        if(head == NULL || head->next == NULL){
+            return head; 
+        }
+        Node* temp = head; 
+        Node* ZeroHead = new Node(-1); 
+        Node* OneHead = new Node(-1); 
+        Node* TwoHead = new Node(-1); 
+        
+        Node* Zero = ZeroHead; 
+        Node* One = OneHead; 
+        Node* Two = TwoHead; 
+        
+        while(temp){
+            if(temp->data == 0){
+                Zero->next = temp; 
+                Zero = temp; 
+            }else if(temp->data == 1){
+                One->next = temp; 
+                One = temp; 
+            }else{
+                Two->next = temp; 
+                Two = temp; 
+            }
+            temp = temp->next; 
+        }
+        //Connecting 0->1->2
+        Zero->next = (OneHead->next)? OneHead->next:TwoHead->next;
+        // it will connect to Ones else two. 
+        
+        One->next = TwoHead->next; 
+        Two->next = NULL; 
+        
+        Node* NewHead = ZeroHead->next; 
+        
+        delete ZeroHead; 
+        delete OneHead; 
+        delete TwoHead; 
+        return NewHead; 
+        
+    }
+};
