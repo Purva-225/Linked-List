@@ -40,3 +40,31 @@ public:
     return head;
     }
 };
+// Optimized using Tortoise and Hare method.
+class Solution {
+public:
+    ListNode* removeNthFromEnd(ListNode* head, int n) {
+       ListNode* Hare = head; 
+       ListNode* Tor = head; 
+
+       for(int i = 0; i<n; i++){
+        Hare = Hare->next; 
+        }
+
+       if(Hare == NULL){ 
+        return head->next; 
+        }
+
+       while(Hare->next != NULL){
+           Hare = Hare->next; 
+            Tor = Tor->next;
+       }
+       
+       ListNode* DelNode = Tor->next; 
+       Tor->next = Tor->next->next; 
+       delete(DelNode); 
+
+       return head; 
+    }
+};
+Tc: O(len), Sc: O(1). 
