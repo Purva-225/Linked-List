@@ -6,6 +6,7 @@
  *     ListNode(int x) : val(x), next(NULL) {}
  * };
  */
+// Brute: Tc: O(n1(logn))+O(n2(logn)), SC: O(n1)
 class Solution {
 public:
     ListNode *getIntersectionNode(ListNode *headA, ListNode *headB) {
@@ -24,5 +25,67 @@ public:
             }
         }
         return NULL; 
+    }
+};
+//BETTER: Tc:O(N1+2N2) , O(1) 
+
+class Solution {
+public:
+// proceed by d steps 
+    ListNode* collisionPoint(ListNode* temp1, ListNode* temp2, int dis){
+
+        while(dis){
+            dis--; 
+            temp2 = temp2->next; 
+        }
+        while(temp1 != temp2){
+            temp1 = temp1->next; 
+            temp2 = temp2->next; 
+        }
+        return temp1; 
+    }
+    ListNode *getIntersectionNode(ListNode *headA, ListNode *headB) {
+
+        int cnt = 0; 
+        int cnt2 = 0; 
+      
+      ListNode* temp1 = headA; 
+        while(temp1 != NULL){
+           cnt++;
+            temp1 = temp1->next; 
+        }
+
+          ListNode* temp2 = headB; 
+        while(temp2 != NULL){
+           cnt2++;
+           temp2 = temp2->next; 
+        }
+        // check for diffrance
+        if(cnt < cnt2){
+           return collisionPoint(headA,headB, cnt2-cnt);
+        }else{
+            return collisionPoint(headB,headA,cnt-cnt2); 
+        }
+    }
+};
+//OPTIMAL: Tc: O(n1+n2)  , Sc: O(1) 
+class Solution {
+public:
+
+    ListNode *getIntersectionNode(ListNode *headA, ListNode *headB){
+        if(headA == NULL || headB == NULL) return NULL ; 
+
+        ListNode* temp1 = headA; 
+        ListNode* temp2 = headB; 
+
+        while(temp1 != temp2){
+            temp1 = temp1->next; 
+            temp2 = temp2->next; 
+        
+         if(temp1 == temp2) return temp1; 
+         if(temp1 == NULL) temp1 = headB; 
+         if(temp2 == NULL) temp2 = headA; 
+        }
+        return temp1; 
     }
 };
