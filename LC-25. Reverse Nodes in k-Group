@@ -8,6 +8,7 @@
  *     ListNode(int x, ListNode *next) : val(x), next(next) {}
  * };
  */
+// TC: O(2N) , Sc: O(n) 
 class Solution {
 public:
     ListNode* reverse(ListNode* head) {
