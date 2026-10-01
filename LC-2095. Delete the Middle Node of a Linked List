@@ -40,3 +40,39 @@ public:
         return head; 
     }
 };
+// Optimal: Tc: O(n), Sc: O(1) Using Hare & Tortoise Method. 
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* deleteMiddle(ListNode* head) {
+        if(head == NULL || head->next == NULL){ 
+            return NULL; 
+        }
+
+        ListNode* Hare = head; 
+        ListNode* Tor = head; 
+
+//here will skip the Tortoise by 1 step so we can delete tor->next mid element and connect tor to mid->next 👇🏼.
+        Hare = Hare->next->next; 
+
+        while(Hare != NULL && Hare->next != NULL){
+            Tor = Tor->next; 
+            Hare = Hare->next->next;  
+        }
+
+       ListNode* MidElem = Tor->next; 
+       Tor->next = Tor->next->next; 
+         delete MidElem; 
+
+       return head; 
+    }
+};
