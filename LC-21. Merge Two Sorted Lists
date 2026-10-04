@@ -74,3 +74,69 @@ public:
         return res; 
     }
 };
+//Tc: O(2MN) , Sc: O(N) 
+/*
+Definition of special linked list:
+struct ListNode
+{
+    int val;
+    ListNode *next;
+    ListNode *child;
+    ListNode()
+    {
+        val = 0;
+        next = NULL;
+        child = NULL;
+    }
+    ListNode(int data1)
+    {
+        val = data1;
+        next = NULL;
+        child = NULL;
+    }
+    ListNode(int data1, ListNode *next1, ListNode* next2)
+    {
+        val = data1;
+        next = next1;
+        child = next1;
+    }
+};
+*/
+
+class Solution {
+public:
+    ListNode* Merge(ListNode* List1, ListNode* List2){
+        ListNode* DummyNode = new ListNode(-1); 
+        ListNode* temp = DummyNode; 
+
+        while(List1 != NULL && List2 != NULL){
+            if(List1->val < List2->val){
+                temp->child = List1; 
+                temp = List1; 
+                 List1 = List1->child; 
+            }else{
+                temp->child = List2; 
+                temp = List2; 
+                List2 = List2->child; 
+            }
+            temp->next = nullptr; 
+        }
+        if(List1){
+            temp->child = List1; 
+            }else{
+                temp->child = List2; 
+            }
+        if(DummyNode->child){
+            DummyNode->child->next = nullptr; 
+        }
+        return DummyNode->child; 
+      }
+    ListNode* flattenLinkedList(ListNode* &lists) {
+         if(lists == NULL || lists->next == NULL){
+        return lists; 
+       }
+       ListNode* MergedHead = flattenLinkedList(lists->next); 
+       lists = Merge(lists , MergedHead); 
+       return lists; 
+    }
+};
