@@ -10,6 +10,7 @@
  */
 // TC: O(2N) + (N log N) due to sorting. 
 // Sc: O(N) as we are using extra space as arr[]. 
+
 class Solution {
 public:
     ListNode* sortList(ListNode* head) {
@@ -30,5 +31,69 @@ public:
         temp = temp->next; 
       }
       return head; 
+    }
+};
+// TC: O(N), Sc: O(1) 
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+//Tc: Log N(N+N/2) , Sc: O(1) 
+
+class Solution {
+public:
+ListNode* FindMiddle(ListNode* head){
+    ListNode* Tor = head; 
+    ListNode* Hare = head->next; 
+
+    while(Hare != NULL && Hare->next != NULL){
+        Tor = Tor->next; 
+        Hare = Hare->next->next; 
+    }
+    return Tor; 
+}
+ListNode* mergeTwoLists(ListNode* list1, ListNode* list2) {
+        
+        ListNode* dummy = new ListNode(0); 
+         ListNode* temp = dummy; 
+
+        while(list1 != NULL && list2 != NULL){
+            if(list1->val < list2->val){
+               temp->next = list1; 
+               list1 = list1->next;
+                temp = temp->next; 
+            }else{
+                temp->next = list2; 
+             list2 = list2->next; 
+             temp = temp->next;  
+            }
+        }
+        if(list1 == NULL){
+            temp->next = list2; 
+        }
+        if(list2 == NULL){
+            temp->next = list1;
+        }
+        return dummy->next; 
+    }
+    ListNode* sortList(ListNode* head) {
+       if(head == NULL || head->next == NULL){
+        return head; 
+       }
+        ListNode* mid = FindMiddle(head); 
+
+        ListNode* right = mid->next; 
+        mid->next = nullptr; 
+        ListNode* left = head; 
+
+        left = sortList(left); 
+        right = sortList(right); 
+        return mergeTwoLists(left, right); 
     }
 };
