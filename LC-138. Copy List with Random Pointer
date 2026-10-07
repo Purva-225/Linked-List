@@ -40,3 +40,55 @@ public:
          return mpp[head]; 
     }
 };
+//Tc: O(3N) , Sc: O(N) due to new Node. 
+/*
+class Solution {
+public:
+   Node* InsertCopy(Node* head){
+    Node* temp = head; 
+    while(temp != NULL){
+        Node* CopyNode = new Node(temp->val);
+        CopyNode->next = temp->next; 
+
+        temp->next = CopyNode; 
+        temp =  CopyNode->next; 
+    }
+    return head;
+}
+
+   Node* ConnectRandomPointer(Node* head){
+    Node* temp = head; 
+    while(temp != NULL){
+        Node* copyNode = temp->next; 
+        if(temp->random != NULL){
+            copyNode->random = temp->random->next; 
+        }else{
+           copyNode->random = NULL; 
+        }
+         temp = temp->next->next; 
+    }
+    return head;
+   }
+
+    Node* copyRandomList(Node* head) {
+        
+         InsertCopy(head);
+         ConnectRandomPointer(head);
+        
+        if(head == NULL){
+           return NULL; 
+        }
+        Node* dummyNode = new Node(-1); 
+        Node* result = dummyNode; 
+        Node* temp = head; 
+
+      while(temp != NULL){
+        result->next = temp->next; 
+        temp->next = temp->next->next;
+
+        result = result->next;
+        temp = temp->next; 
+      }
+      return dummyNode->next; 
+    }
+};
