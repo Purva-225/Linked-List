@@ -1,0 +1,56 @@
+/*
+Definition of doubly linked list:
+struct ListNode
+{
+    int val;
+    ListNode *next;
+    ListNode *prev;
+    ListNode()
+    {
+        val = 0;
+        next = NULL;
+        prev = NULL;
+    }
+    ListNode(int data1)
+    {
+        val = data1;
+        next = NULL;
+        prev = NULL;
+    }
+    ListNode(int data1, ListNode *next1, ListNode *prev1)
+    {
+        val = data1;
+        next = next1;
+        prev = prev1;
+    }
+};
+*/
+//Tc: O(n) , Sc: O(1)
+class Solution {
+public:
+    ListNode * deleteAllOccurrences(ListNode* head, int target) {
+        if(head == NULL || head->next == NULL) return head;
+           ListNode* temp = head; 
+
+        while(temp != NULL){
+              if(temp->val == target){
+                if(temp == head){
+                head = head->next; 
+            } 
+             if(temp ->prev != NULL){
+              temp->prev->next = temp->next; 
+          }
+           if(temp->next != NULL){
+            temp->next->prev = temp->prev; 
+         }
+         ListNode* front = temp->next; 
+           delete(temp); 
+           temp = front; 
+         }
+        else{
+            temp = temp->next; 
+          }
+        }
+        return head; 
+    }
+};
