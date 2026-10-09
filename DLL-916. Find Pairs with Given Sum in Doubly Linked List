@@ -42,3 +42,53 @@ public:
         return ans; 
     }
 };
+/*
+class ListNode {
+public:
+    int val;
+    ListNode* next;
+    ListNode* prev; 
+
+    ListNode(int value) : val(value), next(nullptr), prev(nullptr) {}
+
+    ~ListNode() {
+        delete next;
+    }
+};
+*/
+//TC: O(2N), SC: O(1)
+class Solution {
+public:
+    
+    ListNode* FindTail(ListNode* head){
+        ListNode* tail = head; 
+        while(tail->next != NULL){
+            tail = tail->next; 
+        }
+        return tail; 
+    }
+    vector<vector<int>> findPairsWithGivenSum(ListNode* head, int target) {
+
+            vector<vector<int>> ans;
+
+        if(head == NULL || head->next == NULL){
+            return ans; 
+        }
+        
+        ListNode* Left = head; 
+        ListNode* Right = FindTail(head); 
+
+        while(Left->val < Right->val){
+          if(Left->val +Right->val == target){
+            ans.push_back({Left->val,Right->val}); 
+            Left = Left->next; 
+            Right = Right->prev;
+          }else if(Left->val + Right->val < target){
+            Left = Left->next; 
+          }else{
+            Right = Right->prev; 
+          }
+        }
+        return ans; 
+    }
+};
