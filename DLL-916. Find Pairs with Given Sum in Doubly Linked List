@@ -1,0 +1,44 @@
+/*
+class ListNode {
+public:
+    int val;
+    ListNode* next;
+    ListNode* prev; 
+
+    ListNode(int value) : val(value), next(nullptr), prev(nullptr) {}
+
+    ~ListNode() {
+        delete next;
+    }
+};
+*/
+//Tc: O(n^2), Sc: O(n)
+class Solution {
+public:
+    vector<vector<int>> findPairsWithGivenSum(ListNode* head, int target) {
+
+            vector<vector<int>> ans;
+
+        if(head == NULL || head->next == NULL){
+            return ans; 
+        }
+        ListNode* temp = head; 
+        int Sum = 0; 
+        if(head == NULL){
+            return ans; 
+        }
+        
+        while(temp != NULL){
+           ListNode* NewNode = temp->next; 
+             
+            while(NewNode != NULL){
+               if(temp->val + NewNode->val == target){
+                 ans.push_back({temp->val, NewNode->val}); 
+               }
+               NewNode = NewNode->next; 
+              }
+                temp = temp->next;
+            }
+        return ans; 
+    }
+};
